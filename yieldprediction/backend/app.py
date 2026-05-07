@@ -9,16 +9,18 @@ import io
 import json
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
+import os
 
 # app setup
 app = Flask(__name__)
 CORS(app)
 
 # paths
-MODEL_PATH = r"/home/rdk/workspace/yieldprediction/project/yieldprediction/backend/models/yield_model.pkl"
-SCALER_PATH = r"/home/rdk/workspace/yieldprediction/project/yieldprediction/backend/models/feature_scaler.pkl"
-FEATURES_CSV = r"/home/rdk/workspace/yieldprediction/project/yieldprediction/backend/data/farm_features.csv"
-DB_PATH = r"/home/rdk/workspace/yieldprediction/project/yieldprediction/backend/data/predictions.db"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, 'models', 'yield_model.pkl')
+SCALER_PATH = os.path.join(BASE_DIR, 'models', 'feature_scaler.pkl')
+FEATURES_CSV = os.path.join(BASE_DIR, 'data', 'farm_features.csv')
+DB_PATH = os.path.join(BASE_DIR, 'data', 'predictions.db')
 
 # load model and scaler
 MODEL = joblib.load(MODEL_PATH)
@@ -46,12 +48,12 @@ def init_db():
     conn = get_db()
     cur = conn.cursor()
 
-    cur.execute(""""
-                CREATE TABLE INF NOT EXISTS farms(
+    cur.execute("""
+                CREATE TABLE IF NOT EXISTS farms(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT,
                 latitude REAL,
-                longitude REAL
+                longitude REAL,
                 area_m2 REAL,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
@@ -155,7 +157,7 @@ def add_farm():
             "area_m2": area_m2}
     }), 201
 
-@app.route('api/farms/list', methods = ["GET"])
+@app.route('/api/farms/list', methods = ["GET"])
 def list_farms():
     conn = get_db()
     rows = conn.execute("""

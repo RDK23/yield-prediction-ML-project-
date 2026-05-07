@@ -138,7 +138,7 @@ def create_seasonal_features(dekadal_data):
 
 # 3. Load farms from CSV
 print("Loading farm data...")
-farms_df = pd.read_csv("/home/rdk/workspace/yieldprediction/project/yieldprediction/backend/data/farms.csv")
+farms_df = pd.read_csv("/home/rdk/workspace/yield-prediction-ML-project-/yieldprediction/backend/data/farms.csv")
 print(f"Loaded {len(farms_df)} farms")
 
 # 4. Process each farm
@@ -254,7 +254,7 @@ if all_dekadal_data:
     # Save dekadal time series (for reference)
     dekadal_df = pd.DataFrame(all_dekadal_data)
     dekadal_df = dekadal_df.sort_values(['farm_id', 'dekad'])
-    dekadal_df.to_csv("zambia_farms_time_series_2.csv", index=False)
+    dekadal_df.to_csv("/home/rdk/workspace/yield-prediction-ML-project-/yieldprediction/backend/data/zambia_farms_time_series.csv", index=False)
     print(f"Saved dekadal time series: {len(dekadal_df)} records")
     
     # Create seasonal features for model training
@@ -262,7 +262,7 @@ if all_dekadal_data:
     
     if not seasonal_features.empty:
         # Save seasonal features (for Module 3)
-        output_file = "farm_features.csv"
+        output_file = "/home/rdk/workspace/yield-prediction-ML-project-/yieldprediction/backend/data/farms.csv"
         seasonal_features.to_csv(output_file, index=False)
         
         print(f"Success! Saved seasonal features for {len(seasonal_features)} farms to {output_file}")

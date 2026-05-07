@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import os
 
-def engineer_features(input_file="/workspace/yieldprediction/project/yieldprediction/backend/data/zambia_farms_time_series_2.csv", 
+def engineer_features(input_file="/workspace/yield-prediction-ML-project-/yieldprediction/backend/data/zambia_farms_time_series.csv", 
                       output_file="farm_features.csv"):
     """
     Convert dekadal time series to seasonal features for yield prediction
@@ -122,4 +122,4 @@ def engineer_features(input_file="/workspace/yieldprediction/project/yieldpredic
 
 if __name__ == "__main__":
     # Use relative path for better portability
-    engineer_features(f"/home/rdk/workspace/yieldprediction/project/yieldprediction/backend/data/zambia_farms_time_series_2.csv", "farm_features.csv")
+    engineer_features(f"/home/rdk/workspace/yield-prediction-ML-project-/yieldprediction/backend/data/zambia_farms_time_series.csv", "farm_features.csv")
